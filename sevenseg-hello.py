@@ -1,4 +1,4 @@
-# This script counts from 0 to 9 on Raspberry Pi with Radioshack 7 Segment Display
+# This script writes out 'hello aj' to delight the kiddies on Raspberry Pi with Radioshack 7 Segment Display
 
 import RPi.GPIO as GPIO
 import time
@@ -30,8 +30,8 @@ class SevenSegmentDisplay():
   - pin 11 controls segment a (the top one)
   - pin 12 controls segment b (the top right one)
   - pin 13->c, 15->d, 16->e, 18->f, 22->g.
-  These outputs are assumed to be active low, i.e. the segment lights up when
-  the pin is turned OFF.
+  These outputs are assumed to be active high, i.e. the segment lights up when
+  the pin is turned ON.
   """
 
   # the mapping of numbers to segments needed for displaying that number
@@ -84,9 +84,9 @@ class SevenSegmentDisplay():
   def __init__(self,
                  segments = {'a': 18, 'b': 23, 'c': 25, 'd': 22, 'e': 27, 'f': 4, 'g': 17 }):
     """
-    The optional "segments" argument contains the pin mapping - please specify yours in the
-    following way, if it differs from the default:
-    segments={'a':15', 'b': 13, (etc)}  # a, b etc are the segments, 15, 13 etc are the pin numbers
+    The "segments" argument contains the pin mapping - please check this every time you set up   
+    the RPi for this project
+    segments={'a':18', 'b': 23, (etc)}  # a, b etc are the segments, 18, 23 etc are the pin numbers
     """
 
     self.segments = segments
@@ -114,13 +114,13 @@ class SevenSegmentDisplay():
     self.current_state = number_to_display
 
 # Main loop
-
+# Loop through and spell out the string defined in the SevenSegmentDisplay class
 i=0
 while i < 13:
     	s=SevenSegmentDisplay()
 	s.set(1)
 	for i in range(0, 14):
-		print("Displaying %d" % i)
+		print("Displaying string position %d" % i)
 		s.set(i)
 		time.sleep(.25)
 
